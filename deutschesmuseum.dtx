@@ -209,7 +209,6 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
 %
 %    \begin{macrocode}
 \ifdeutschesmuseum@cfonts
-  \usepackage[urw-garamond]{mathdesign}
   \usepackage{fontspec}
   \setmainfont{GaramondBQ}[
   Extension = .otf,
@@ -233,6 +232,7 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
   \newcommand{\fnmarkfont}{\FuturaPTCondMedium\fontsize{10pt}{11pt}\selectfont}
   \newcommand{\fnmarktextfont}{\FuturaPTCondMedium\fontsize{8pt}{10pt}\selectfont}
   \newcommand{\fnfont}{\FuturaPTLight\fontsize{8pt}{10pt}\selectfont}
+  \RequirePackage[italic,defaultmathsizes]{mathastext}
 \else
   \usepackage[urw-garamond]{mathdesign}
   \usepackage{lato}
@@ -268,6 +268,7 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
 inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 \setlength\parskip{0pt}
 \setlength\parindent{5mm}
+\renewcommand{\arraystretch}{0.9}
 \renewenvironment{quotation}{\list{}{%
     \leftmargin5mm \listparindent\normalparindent
     \itemindent\z@
@@ -301,8 +302,9 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 % \begin{macro}{\supertitle}
 % The supertitle
 %    \begin{macrocode}
-\newcommand\supertitle[1]{\def\@supertitle{#1}}
+\newcommand\supertitle[1]{\def\@supertitle{#1}\def\shorttitle{#1}}
 \supertitle{}
+\title{}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -318,8 +320,10 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
   \@topnum\z@ % this prevents figures from falling at the top of page
   \thispagestyle{firstpage}%
   \ifx\@supertitle\@empty
-  \else{\noindent\color{DeutschesMuseumRed}\hIfont\@supertitle\vspace\baselineskip\par}\fi
-  {\noindent\hIIfont\@title\medskip\par}%
+  \else{\noindent\color{DeutschesMuseumRed}\hIfont\@supertitle\par}\fi
+  \ifx\@title\@empty\else
+     {\vspace\baselineskip\noindent\hIIfont\@title\par}%
+  \fi
   {\noindent\author@andify\authors\normalsize\normalfont\itshape\authors\vspace\baselineskip\par}%
   \@afterheading
 }
@@ -431,6 +435,7 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 \pagestyle{standard}
 \normalsize
 \normalfont
+\raggedbottom
 %</class>
 %    \end{macrocode}
 %
