@@ -209,8 +209,30 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
 %
 %    \begin{macrocode}
 \ifdeutschesmuseum@cfonts
-  \ClassError{deutschesmuseum}{Commercial fonts are not yet
-    included}{Please use nocfonts option}
+  \usepackage[urw-garamond]{mathdesign}
+  \usepackage{fontspec}
+  \setmainfont{GaramondBQ}[
+  Extension = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Bold,
+  ItalicFont  = *-Italic,
+  BoldItalicFont = *-MediumItalic]
+  \newfontfamily\FuturaPTLight{futura-pt_light}[
+  Extension = .otf,
+  UprightFont = *,
+  ItalicFont = *-oblique]
+  \newfontfamily\FuturaPTCondMedium{futura-pt_cond-medium}[
+  Extension = .otf,
+  UprightFont = *,
+  ItalicFont = *-oblique]
+  \newcommand{\foliofont}{\FuturaPTLight\fontsize{9pt}{11pt}\selectfont}
+  \newcommand{\hIfont}{\FuturaPTCondMedium\fontsize{14pt}{16pt}\selectfont}
+  \newcommand{\hIIfont}{\FuturaPTCondMedium\fontsize{12.5pt}{12pt}\selectfont}
+  \newcommand{\hIIIfont}{\FuturaPTCondMedium\fontsize{11pt}{12pt}\selectfont}
+  \newcommand{\hIVfont}{\FuturaPTCondMedium\fontsize{10pt}{12pt}\selectfont}
+  \newcommand{\fnmarkfont}{\FuturaPTCondMedium\fontsize{10pt}{11pt}\selectfont}
+  \newcommand{\fnmarktextfont}{\FuturaPTCondMedium\fontsize{8pt}{10pt}\selectfont}
+  \newcommand{\fnfont}{\FuturaPTLight\fontsize{8pt}{10pt}\selectfont}
 \else
   \usepackage[urw-garamond]{mathdesign}
   \usepackage{lato}
@@ -222,8 +244,8 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
   \newcommand{\fnmarkfont}{\lato\fontsize{10pt}{11pt}\fontseries{n}\selectfont}
   \newcommand{\fnmarktextfont}{\lato\fontsize{8pt}{10pt}\fontseries{n}\selectfont}
   \newcommand{\fnfont}{\lato\fontsize{8pt}{10pt}\fontseries{l}\selectfont}
-  \let\bibfont\fnfont
 \fi
+  \let\bibfont\fnfont
   
 %    \end{macrocode}
 %
