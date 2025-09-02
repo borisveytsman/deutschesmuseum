@@ -1,0 +1,41 @@
+\documentclass[nocfonts]{deutschesmuseum}
+\usepackage{kantlipsum}
+\begin{document}
+\supertitle{Typographical samples}
+\title{Sample file for Deutsches Museum}
+\author{Boris Veytsman \and C.~O.~Respondent}
+\maketitle
+
+This is a demo for the Deutsches Museum contribution style.
+
+\section{Introduction}
+\label{sec:intro}
+
+We can have numbered sections.  Quotations, for
+example\cite[][Article~7]{UNDeclaration}: 
+\begin{quote}
+  All are equal before the law and are entitled without any
+  discrimination to equal protection of the law. All are entitled to
+  equal protection against any discrimination in violation of this
+  Declaration and against any incitement to such discrimination. 
+\end{quote}
+
+\subsection{Subsection example}
+\label{sec:subsection}
+
+We can have subsections and footnotes\footnote{A normal footnote}.
+
+
+\section{Some pseudo-Kant}
+\label{sec:kant}
+
+We are using \textsl{kantlipsum} package\cite{kantlipsum}. 
+
+\kant
+
+\clearpage
+
+\bibliographystyle{plainnat}
+\bibliography{sample}
+
+\end{document}
