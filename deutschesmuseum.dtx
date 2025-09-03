@@ -94,20 +94,52 @@
 % and install.  If you do not have them, use the options |nocfonts| to
 % substitute them for free fonts available in standard \TeX\
 % distriutions.  The option |cfonts| (the default) uses commercial
-% fonts.  Note that since commercial fonts are in OTF formats, you
-% must use Xe\TeX\ or Lua\TeX\ if you select this option.
+% fonts.
 %
+% In both cases the package uses fonts in OTF formats, so you need to
+% use Lua\TeX\ or Xe\TeX\ for the compilation.
+%
+% If you use commercial fonts, the package expects the file names
+% listed in Table~\ref{tab:fonts}.
+%
+% \begin{table}
+%   \centering
+%   \begin{tabularx}{\textwidth}{>{\raggedright}Xl}
+%       \toprule
+%       Font & File\\
+%       \midrule
+%       Garamond BQ Regular & |GaramondBQ-Regular.otf|\\
+%       Garamond BQ Italic & |GaramondBQ-Italic.otf| \\
+%       Garamond BQ Bold & |GaramondBQ-Bold.otf|\\
+%       Garamond BQ Medium Italic & |GaramondBQ-MediumItalic.otf|\\
+%       Futura PT Light & |futura-pt_light.otf|\\
+%       Futura PT Light Oblique & |futura-pt_light-oblique.otf|\\
+%       Futura PT Medium & |futura-pt_medium.otf|\\
+%       Futura PT Medium Oblique & |futura-pt_medium-oblique.otf|\\
+%       Futura PT Condensed Medium & |futura-pt_cond-medium.otf|\\
+%       Futura PT Condensed Medium Oblique & |futura-pt_cond-medium-oblique.otf|\\
+%       \bottomrule
+%     \end{tabularx}
+%   \caption{Commerical fonts (if the option \texttt{cfonts} is used)}
+%   \label{tab:fonts}
+% \end{table}
+%
+% Internally the class uses \textsl{amsart}, so all its options are
+% supported.  
 %
 %\section{Front matter}
 %\label{sec:ug_frontmatter}
 %
-% \DescribeMacro{\supertitle}%
+% \DescribeMacro{\title}%
+% As in \textsl{amsart} package, the \cs{title} command has an
+% optional argument, that defines \cs{shortitle} macro, used for
+% running heads.
+%
+% \DescribeMacro{\subtitle}%
 % Deutsches Museum contributions, along with the title, have
-% |\supertitle|, which should be set, for example,
-% \begin{verbatim}
-% \supertitle{Ancient Science}
-% \title{Medicine in the Roman world}
-% \end{verbatim}
+% |\subtitle|.  The running heads pick either short title, or
+% subtitle, whichever is defined last.  You can override this choice
+% by redefining |\shortitle|.  Examples
 %
 %
 %
@@ -115,7 +147,8 @@
 %\label{sec:ug_biblio}
 %
 % The package uses bibliography in footnotes and |natbib| for
-% formatting the bibliography list.  
+% formatting the bibliography list.  The command \cs{cite} produces
+% footnote citations. 
 %
 %
 % \StopEventually{%
@@ -139,13 +172,14 @@
 \ProvidesFile{deutschesmuseum.dtx}
 %</gobble>
 %<class>\ProvidesClass{deutschesmuseum}
-[2025/09/01 v0.1 Typesetting books for Deutsches Museum]
+[2025/09/02 v1.0 Typesetting books for Deutsches Museum]
 %    \end{macrocode}
 %
 % And the driver code:
 %    \begin{macrocode}
 %<*gobble>
 \documentclass{ltxdoc}
+\usepackage{booktabs,tabularx}
 \usepackage[breaklinks,colorlinks,linkcolor=black,citecolor=black,
 pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
 \PageIndex
@@ -208,8 +242,8 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
 %\label{sec:fonts}
 %
 %    \begin{macrocode}
+\usepackage{fontspec}
 \ifdeutschesmuseum@cfonts
-  \usepackage{fontspec}
   \setmainfont{GaramondBQ}[
   Extension = .otf,
   UprightFont = *-Regular,
@@ -217,6 +251,12 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
   ItalicFont  = *-Italic,
   BoldItalicFont = *-MediumItalic]
   \newfontfamily\FuturaPTLight{futura-pt_light}[
+  Extension = .otf,
+  UprightFont = *,
+  ItalicFont = *-oblique,
+  BoldFont = futura-pt_medium,
+  BoldItalicFont = futura-pt_medium-oblique]
+  \newfontfamily\FuturaPTMedium{futura-pt_medium}[
   Extension = .otf,
   UprightFont = *,
   ItalicFont = *-oblique]
@@ -229,24 +269,38 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
   \newcommand{\hIIfont}{\FuturaPTCondMedium\fontsize{12.5pt}{12pt}\selectfont}
   \newcommand{\hIIIfont}{\FuturaPTCondMedium\fontsize{11pt}{12pt}\selectfont}
   \newcommand{\hIVfont}{\FuturaPTCondMedium\fontsize{10pt}{12pt}\selectfont}
-  \newcommand{\fnmarkfont}{\FuturaPTCondMedium\fontsize{10pt}{11pt}\selectfont}
-  \newcommand{\fnmarktextfont}{\FuturaPTCondMedium\fontsize{8pt}{10pt}\selectfont}
+  \newcommand{\fnmarkfont}{\FuturaPTMedium\fontsize{10pt}{11pt}\selectfont}
+  \newcommand{\fnmarktextfont}{\FuturaPTMedium\fontsize{8pt}{10pt}\selectfont}
   \newcommand{\fnfont}{\FuturaPTLight\fontsize{8pt}{10pt}\selectfont}
-  \RequirePackage[italic,defaultmathsizes]{mathastext}
 \else
-  \usepackage[urw-garamond]{mathdesign}
-  \usepackage{lato}
-  \newcommand{\foliofont}{\lato\fontsize{9pt}{11pt}\fontseries{l}\selectfont}
-  \newcommand{\hIfont}{\lato\fontsize{14pt}{16pt}\fontseries{n}\selectfont}
-  \newcommand{\hIIfont}{\lato\fontsize{12.5pt}{12pt}\fontseries{n}\selectfont}
-  \newcommand{\hIIIfont}{\lato\fontsize{11pt}{12pt}\fontseries{n}\selectfont}
-  \newcommand{\hIVfont}{\lato\fontsize{10pt}{12pt}\fontseries{n}\selectfont}
-  \newcommand{\fnmarkfont}{\lato\fontsize{10pt}{11pt}\fontseries{n}\selectfont}
-  \newcommand{\fnmarktextfont}{\lato\fontsize{8pt}{10pt}\fontseries{n}\selectfont}
-  \newcommand{\fnfont}{\lato\fontsize{8pt}{10pt}\fontseries{l}\selectfont}
+  \setmainfont{EBGaramond}[
+  Extension = .otf,
+  UprightFont = *-Regular,
+  BoldFont    = *-Bold,
+  ItalicFont  = *-Italic,
+  BoldItalicFont = *-BoldItalic]
+  \newfontfamily\LatoLight{Lato-Light}[
+  Extension = .ttf,
+  UprightFont = *,
+  ItalicFont = *Italic,
+  BoldFont = Lato-Medium,
+  BoldItalicFont = Lato-MediumItalic]
+  \newfontfamily\LatoMedium{Lato-Medium}[
+  Extension = .ttf,
+  UprightFont = *,
+  ItalicFont = *Italic]
+  \newcommand{\foliofont}{\LatoLight\fontsize{9pt}{11pt}\selectfont}
+  \newcommand{\hIfont}{\LatoMedium\fontsize{14pt}{16pt}\selectfont}
+  \newcommand{\hIIfont}{\LatoMedium\fontsize{12.5pt}{12pt}\selectfont}
+  \newcommand{\hIIIfont}{\LatoMedium\fontsize{11pt}{12pt}\selectfont}
+  \newcommand{\hIVfont}{\LatoMedium\fontsize{10pt}{12pt}\selectfont}
+  \newcommand{\fnmarkfont}{\LatoMedium\fontsize{10pt}{11pt}\selectfont}
+  \newcommand{\fnmarktextfont}{\LatoMedium\fontsize{8pt}{10pt}\selectfont}
+  \newcommand{\fnfont}{\LatoLight\fontsize{8pt}{10pt}\selectfont}
 \fi
-  \let\bibfont\fnfont
-  
+  \let\bibfont\fnfont  
+  \RequirePackage[math-style=ISO, bold-style=ISO]{unicode-math}
+  \setmathfont{Garamond-Math.otf}[StylisticSet={7,9}]
 %    \end{macrocode}
 %
 % Font sizes.  We redefine |amsart| ones
@@ -299,12 +353,11 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 %\section{Front matter}
 %\label{sec:front_matter}
 %
-% \begin{macro}{\supertitle}
-% The supertitle
+% \begin{macro}{\subtitle}
+% The subtitle
 %    \begin{macrocode}
-\newcommand\supertitle[1]{\def\@supertitle{#1}\def\shorttitle{#1}}
-\supertitle{}
-\title{}
+\newcommand\subtitle[1]{\def\@subtitle{#1}\def\shorttitle{#1}}
+\subtitle{}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -319,10 +372,10 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
   \par
   \@topnum\z@ % this prevents figures from falling at the top of page
   \thispagestyle{firstpage}%
-  \ifx\@supertitle\@empty
-  \else{\noindent\color{DeutschesMuseumRed}\hIfont\@supertitle\par}\fi
-  \ifx\@title\@empty\else
-     {\vspace\baselineskip\noindent\hIIfont\@title\par}%
+  \ifx\@title\@empty
+  \else{\noindent\color{DeutschesMuseumRed}\hIfont\@title\par}\fi
+  \ifx\@subtitle\@empty\else
+     {\vspace\baselineskip\noindent\hIIfont\@subtitle\par}%
   \fi
   {\noindent\author@andify\authors\normalsize\normalfont\itshape\authors\vspace\baselineskip\par}%
   \@afterheading
@@ -423,7 +476,7 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 %    \begin{macrocode}
 \renewcommand\bibsection{\section*{\refname}}
 \renewcommand\refname{Bibliography}
-\def\bibpreamble{\begin{multicols}{2}}
+\def\bibpreamble{\setlength\multicolsep{\z@}\begin{multicols}{2}}
 \def\bibcleanup{\vskip-\lastskip\end{multicols}}%  
 %    \end{macrocode}
 %
@@ -435,7 +488,6 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 \pagestyle{standard}
 \normalsize
 \normalfont
-\raggedbottom
 %</class>
 %    \end{macrocode}
 %

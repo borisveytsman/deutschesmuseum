@@ -1,8 +1,8 @@
-\documentclass{deutschesmuseum}
+\documentclass[nocfonts,fleqn]{deutschesmuseum}
 \usepackage{kantlipsum}
 \begin{document}
-\supertitle{Typographical samples}
-\title{Sample file for Deutsches Museum}
+\title{Typographical samples}
+\subtitle{Sample file for Deutsches Museum}
 \author{Boris Veytsman \and C.~O.~Respondent}
 \maketitle
 
@@ -28,7 +28,34 @@ We can have subsections and footnotes\footnote{A normal footnote}.
 \section{Mathematics}
 \label{sec:math}
 
-Compare $a$ and \textit{a}.  
+The samples below are based on the example from the \emph{Free Math
+  Fonts Survey}\cite{Hartke06,
+  free-math-font-survey}.
+
+
+\textbf{Theorem 1 (Residue Theorem).}
+Let $f$ be analytic in the region $G$ except for the isolated singularities $a_1,a_2,\ldots,a_m$. If $\gamma$ is a closed rectifiable curve in $G$ which does not pass through any of the points $a_k$ and if $\gamma\approx 0$ in $G$ then
+\[
+\frac{1}{2\pi i}\int_\gamma f = \sum_{k=1}^m n(\gamma;a_k) \text{Res}(f;a_k).
+\]
+
+\textbf{Theorem 2 (Maximum Modulus).}
+\emph{Let $G$ be a bounded open set in $\mathbb{C}$ and suppose that $f$ is a continuous function on $G^-$ which is analytic in $G$. Then}
+\[
+\max\{|f(z)|:z\in G^-\}=\max \{|f(z)|:z\in \partial G \}.
+\]
+
+Maxwell's equations
+\begin{align}
+  \nabla\cdot\mathbf{E} &= \frac{\rho}{\epsilon_0}\\
+  \nabla\cdot\mathbf{B} &= 0\\
+  \nabla\times\mathbf{E} &= - \frac{\partial\mathbf{B}}{\partial t}\\
+  \nabla\times\mathbf{B} &= \mu_0\left(
+                           \mathbf{J} +
+                           \epsilon_0\frac{\partial\mathbf{E}}{\partial
+                           t}
+                           \right).
+\end{align}
 
 \section{Some pseudo-Kant}
 \label{sec:kant}
@@ -37,7 +64,7 @@ We are using \textsl{kantlipsum} package\cite{kantlipsum}.
 
 \kant
 
-\clearpage
+
 
 \bibliographystyle{plainnat}
 \bibliography{sample}
