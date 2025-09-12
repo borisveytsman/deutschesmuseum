@@ -124,6 +124,11 @@
 %   \label{tab:fonts}
 % \end{table}
 %
+% \DescribeOption{garamondmath,nogaramondmath}%
+% By default the class uses \textsl{unicode-math} with Garamond math
+% package.  The option |nogaramondmath| disables this behavior, so you
+% can experiment with other math styles.
+%
 % Internally the class uses \textsl{amsart}, so all its options are
 % supported.  
 %
@@ -173,7 +178,7 @@
 \ProvidesFile{deutschesmuseum.dtx}
 %</gobble>
 %<class>\ProvidesClass{deutschesmuseum}
-[2025/09/04 v1.1 Typesetting books for Deutsches Museum]
+[2025/09/11 v1.2 Typesetting books for Deutsches Museum]
 %    \end{macrocode}
 %
 % And the driver code:
@@ -205,6 +210,17 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
 \deutschesmuseum@cfontstrue
 \DeclareOption{cfonts}{\deutschesmuseum@cfontstrue}
 \DeclareOption{nocfonts}{\deutschesmuseum@cfontsfalse}
+%    \end{macrocode} 
+% \end{macro}
+%
+% \begin{macro}{\ifdeutschesmuseum@garamondmath}
+% \changes{1.2}{2025/09/11}{Added options}
+% Whether we are using Garamond math
+%    \begin{macrocode}
+\newif\ifdeutschesmuseum@garamondmath
+\deutschesmuseum@garamondmathtrue
+\DeclareOption{garamondmath}{\deutschesmuseum@garamondmathtrue}
+\DeclareOption{nogaramondmath}{\deutschesmuseum@garamondmathfalse}
 %    \end{macrocode} 
 % \end{macro}
 %
@@ -268,8 +284,8 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
   \newcommand{\foliofont}{\FuturaPTLight\fontsize{9pt}{11pt}\selectfont}
   \newcommand{\hIfont}{\FuturaPTCondMedium\fontsize{14pt}{16pt}\selectfont}
   \newcommand{\hIIfont}{\FuturaPTCondMedium\fontsize{12.5pt}{12pt}\selectfont}
-  \newcommand{\hIIIfont}{\FuturaPTCondMedium\fontsize{11pt}{12pt}\selectfont}
-  \newcommand{\hIVfont}{\FuturaPTCondMedium\fontsize{10pt}{12pt}\selectfont}
+  \newcommand{\hIIIfont}{\FuturaPTCondMedium\fontsize{12.5pt}{12pt}\selectfont}
+  \newcommand{\hIVfont}{\FuturaPTCondMedium\fontsize{11pt}{12pt}\selectfont}
   \newcommand{\fnmarkfont}{\FuturaPTMedium\fontsize{10pt}{11pt}\selectfont}
   \newcommand{\fnmarktextfont}{\FuturaPTMedium\fontsize{8pt}{10pt}\selectfont}
   \newcommand{\fnfont}{\FuturaPTLight\fontsize{8pt}{10pt}\selectfont}
@@ -299,9 +315,13 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
   \newcommand{\fnmarktextfont}{\LatoMedium\fontsize{8pt}{10pt}\selectfont}
   \newcommand{\fnfont}{\LatoLight\fontsize{8pt}{10pt}\selectfont}
 \fi
-  \let\bibfont\fnfont  
+\let\bibfont\fnfont
+\ifdeutschesmuseum@garamondmath
   \RequirePackage[math-style=ISO, bold-style=ISO]{unicode-math}
   \setmathfont{Garamond-Math.otf}[StylisticSet={7,9}]
+\else
+  \RequirePackage{amssymb}
+\fi  
 %    \end{macrocode}
 %
 % Font sizes.  We redefine |amsart| ones
@@ -388,7 +408,7 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 % \changes{1.1}{2025/09/04}{Added abstract handling}
 % Abstract is an unnumbered section divided from the body
 %    \begin{macrocode}
-\renewenvironment{abstract}{\section*{\abstractname}}{\medskip}
+\renewenvironment{abstract}{\section*{\abstractname}\vspace{-\baselineskip}}{\medskip}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -399,7 +419,7 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 % The standard sectioning
 %    \begin{macrocode}
 \renewcommand\section{%
-  \@startsection{section}{1}{\z@}{-\baselineskip}{1sp}{\hIIIfont}}
+  \@startsection{section}{1}{\z@}{-2\baselineskip}{\baselineskip}{\hIIIfont}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\subsection}
@@ -459,8 +479,8 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 %    \begin{macrocode}
 \fancypagestyle{standard}{%
   \fancyhf{}%
-  \fancyhead[RO]{\foliofont\shorttitle\quad\thepage}%
-  \fancyhead[LE]{\foliofont\thepage\quad\shortauthors}%
+  \fancyhead[RO]{\foliofont\shorttitle\quad\quad}%
+  \fancyhead[LE]{\foliofont\quad\quad\shortauthors}%
 }
 %    \end{macrocode}
 %
