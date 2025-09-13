@@ -132,6 +132,11 @@
 % Internally the class uses \textsl{amsart}, so all its options are
 % supported.  
 %
+% \DescribeOption{folios,nofolios}%
+% Deutsches Museum prefers to put page numbers in the post production,
+% so we omit them by default.  The option |folios| restores them,
+% while the option |nofolios| (default) suppresses them.
+%
 %\section{Front matter}
 %\label{sec:ug_frontmatter}
 %
@@ -178,7 +183,7 @@
 \ProvidesFile{deutschesmuseum.dtx}
 %</gobble>
 %<class>\ProvidesClass{deutschesmuseum}
-[2025/09/11 v1.1 Typesetting books for Deutsches Museum]
+[2025/09/13 v1.2 Typesetting books for Deutsches Museum]
 %    \end{macrocode}
 %
 % And the driver code:
@@ -214,7 +219,7 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
 % \end{macro}
 %
 % \begin{macro}{\ifdeutschesmuseum@garamondmath}
-% \changes{1.1}{2025/09/11}{Added options}
+% \changes{1.1}{2025/09/11}{Added option}
 % Whether we are using Garamond math
 %    \begin{macrocode}
 \newif\ifdeutschesmuseum@garamondmath
@@ -223,6 +228,18 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
 \DeclareOption{nogaramondmath}{\deutschesmuseum@garamondmathfalse}
 %    \end{macrocode} 
 % \end{macro}
+%
+% \begin{macro}{\ifdeutschesmuseum@folios}
+% \changes{1.2}{2025/09/13}{Added option}
+% Whether we are using folios
+%    \begin{macrocode}
+\newif\ifdeutschesmuseum@folios
+\deutschesmuseum@foliosfalse
+\DeclareOption{folios}{\deutschesmuseum@foliostrue}
+\DeclareOption{nofolios}{\deutschesmuseum@foliosfalse}
+%    \end{macrocode} 
+% \end{macro}
+%
 %
 % The size-changing options produce a warning:
 %    \begin{macrocode}
@@ -477,10 +494,16 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 %
 % And the standard page style
 %    \begin{macrocode}
+\newcommand\@folio{%
+  \ifdeutschesmuseum@folios
+  \thepage
+  \else
+  \quad
+  \fi}
 \fancypagestyle{standard}{%
   \fancyhf{}%
-  \fancyhead[RO]{\foliofont\shorttitle\quad\quad}%
-  \fancyhead[LE]{\foliofont\quad\quad\shortauthors}%
+  \fancyhead[RO]{\foliofont\shorttitle\quad\@folio}%
+  \fancyhead[LE]{\foliofont\@folio\quad\shortauthors}%
 }
 %    \end{macrocode}
 %
