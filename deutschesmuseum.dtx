@@ -133,7 +133,8 @@
 % supported.  
 %
 % \DescribeOption{folios,nofolios}%
-% Deutsches Museum prefers to put page numbers in the post production,
+% Deutsches Museum prefers to put running titles and page numbers in
+% the post production, 
 % so we omit them by default.  The option |folios| restores them,
 % while the option |nofolios| (default) suppresses them.
 %
@@ -183,7 +184,7 @@
 \ProvidesFile{deutschesmuseum.dtx}
 %</gobble>
 %<class>\ProvidesClass{deutschesmuseum}
-[2025/09/13 v1.2 Typesetting books for Deutsches Museum]
+[2025/09/25 v1.3 Typesetting books for Deutsches Museum]
 %    \end{macrocode}
 %
 % And the driver code:
@@ -231,6 +232,8 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
 %
 % \begin{macro}{\ifdeutschesmuseum@folios}
 % \changes{1.2}{2025/09/13}{Added option}
+% \changes{1.3}{2025/09/25}{Nofolios option now suppresses running
+% title as well}
 % Whether we are using folios
 %    \begin{macrocode}
 \newif\ifdeutschesmuseum@folios
@@ -423,9 +426,10 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 %
 % \begin{macro}{\abstract}
 % \changes{1.1}{2025/09/04}{Added abstract handling}
+% \changes{1.3}{2025/09/25}{Abstract is now a normal unnumbered section}
 % Abstract is an unnumbered section divided from the body
 %    \begin{macrocode}
-\renewenvironment{abstract}{\section*{\abstractname}\vspace{-\baselineskip}}{\medskip}
+\renewenvironment{abstract}{\section*{\abstractname}}{\medskip}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -494,16 +498,10 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 %
 % And the standard page style
 %    \begin{macrocode}
-\newcommand\@folio{%
-  \ifdeutschesmuseum@folios
-  \thepage
-  \else
-  \quad
-  \fi}
 \fancypagestyle{standard}{%
   \fancyhf{}%
-  \fancyhead[RO]{\foliofont\shorttitle\quad\@folio}%
-  \fancyhead[LE]{\foliofont\@folio\quad\shortauthors}%
+  \fancyhead[RO]{\ifdeutschesmuseum@folios\foliofont\shorttitle\quad\thepage\fi}%
+  \fancyhead[LE]{\ifdeutschesmuseum@folios\foliofont\thepage\quad\shortauthors\fi}%
 }
 %    \end{macrocode}
 %
