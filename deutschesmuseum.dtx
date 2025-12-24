@@ -132,11 +132,6 @@
 % Internally the class uses \textsl{amsart}, so all its options are
 % supported.  
 %
-% \DescribeOption{folios,nofolios}%
-% Deutsches Museum prefers to put running titles and page numbers in
-% the post production, 
-% so we omit them by default.  The option |folios| restores them,
-% while the option |nofolios| (default) suppresses them.
 %
 %\section{Front matter}
 %\label{sec:ug_frontmatter}
@@ -184,7 +179,7 @@
 \ProvidesFile{deutschesmuseum.dtx}
 %</gobble>
 %<class>\ProvidesClass{deutschesmuseum}
-[2025/09/25 v1.3 Typesetting books for Deutsches Museum]
+[2025/12/24 v1.4 Typesetting books for Deutsches Museum]
 %    \end{macrocode}
 %
 % And the driver code:
@@ -234,12 +229,11 @@ pagecolor=black,urlcolor=black,hyperindex=false]{hyperref}
 % \changes{1.2}{2025/09/13}{Added option}
 % \changes{1.3}{2025/09/25}{Nofolios option now suppresses running
 % title as well}
+% \changes{1.4}{2025/12/24}{Deleted option}
 % Whether we are using folios
 %    \begin{macrocode}
-\newif\ifdeutschesmuseum@folios
-\deutschesmuseum@foliosfalse
-\DeclareOption{folios}{\deutschesmuseum@foliostrue}
-\DeclareOption{nofolios}{\deutschesmuseum@foliosfalse}
+\DeclareOption{folios}{\ClassWarning{deutschesmuseum}{Option #1 is obsolete}}
+\DeclareOption{nofolios}{\ClassWarning{deutschesmuseum}{Option #1 is obsolete}}
 %    \end{macrocode} 
 % \end{macro}
 %
@@ -493,15 +487,18 @@ inner=20mm, outer=17mm, top=20mm, bottom=21mm]{geometry}
 %
 % First page style
 %    \begin{macrocode}
-\fancypagestyle{firstpage}{\fancyhf{}}
+\fancypagestyle{firstpage}{\fancyhf{}%
+  \fancyhead[RO]{\foliofont\thepage}%
+  \fancyhead[LE]{\foliofont\thepage}%
+}
 %    \end{macrocode}
 %
 % And the standard page style
 %    \begin{macrocode}
 \fancypagestyle{standard}{%
   \fancyhf{}%
-  \fancyhead[RO]{\ifdeutschesmuseum@folios\foliofont\shorttitle\quad\thepage\fi}%
-  \fancyhead[LE]{\ifdeutschesmuseum@folios\foliofont\thepage\quad\shortauthors\fi}%
+  \fancyhead[RO]{\foliofont\shorttitle\quad\thepage}%
+  \fancyhead[LE]{\foliofont\thepage\quad\shortauthors}%
 }
 %    \end{macrocode}
 %
