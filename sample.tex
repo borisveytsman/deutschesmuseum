@@ -1,5 +1,5 @@
 \documentclass[fleqn,folios]{deutschesmuseum}
-\usepackage{kantlipsum}
+\usepackage{kantlipsum, booktabs, graphicx}
 \begin{document}
 \title{Typographical samples}
 \subtitle{Sample file for Deutsches Museum}
@@ -59,8 +59,36 @@ Maxwell's equations
                            \right).
 \end{align}
 
+We also can have figures (Fig.~\ref{fig:vitruvian}) and tables
+(Table~\ref{tab:one}).  
+
+\begin{figure}
+  \centering
+  \includegraphics{vitruvian}
+  \caption{Vitruvian man}
+  \label{fig:vitruvian}
+\end{figure}
+
+\begin{table}
+  \caption[Sed blandit, tortor a auctor]{Sed blandit, tortor a auctor
+    imperdiet, wisi nibh ornare leo, 
+    ac dictum nibh enim eu orci}
+  \begin{tabular}{lll}
+    \toprule
+    \bfseries Phasellus &  \bfseries At Dui       & \bfseries Donec Commodo \\
+    \midrule    
+     Augue At Nunc    & Nunc In  sapien       & Et magna mollis \\
+     Sagittis         &  Morbi eu elit        &  Phasellus lacus\\
+     Donec a quam     & Etiam pulvinar sapien & Sed nibh magna\\
+    \bottomrule
+  \end{tabular}
+\label{tab:one}
+\end{table}
+
+
 \section{Some pseudo-Kant}
 \label{sec:kant}
+
 
 We are using \textsl{kantlipsum} package\cite{kantlipsum}. 
 
