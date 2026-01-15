@@ -190,7 +190,7 @@
 \ProvidesFile{deutschesmuseum.dtx}
 %</gobble>
 %<class>\ProvidesClass{deutschesmuseum}
-[2026/01/13 v1.6 Typesetting books for Deutsches Museum]
+[2026/01/14 v1.7 Typesetting books for Deutsches Museum]
 %    \end{macrocode}
 %
 % And the driver code:
@@ -435,10 +435,12 @@ inner=20mm, outer=17mm, top=8.3mm, bottom=14.1mm]{geometry}
 % \changes{1.1}{2025/09/04}{Added abstract handling}
 % \changes{1.3}{2025/09/25}{Abstract is now a normal unnumbered
 % section}
-% \changes{1.6}{2026/01/13}{Deleted space between abstract and the body}
+% \changes{1.6}{2026/01/13}{Deleted space between abstract and the
+% body}
+% \changes{1.6}{2026/01/13}{Added space before abstract}
 % Abstract is an unnumbered section divided from the body
 %    \begin{macrocode}
-\renewenvironment{abstract}{\section*{\abstractname}}{}
+\renewenvironment{abstract}{\par\vspace{2.5ex}\section*{\abstractname}}{}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -521,13 +523,13 @@ inner=20mm, outer=17mm, top=8.3mm, bottom=14.1mm]{geometry}
 %\section{Floats}
 %\label{sec:floats}
 %
-% \changes{1.6}{2026/01/13}{Redid captions}
+% \changes{1.6}{2026/01/13}{Remade captions}
+% \changes{1.7}{2026/01/14}{singleline check for captions}
 %    \begin{macrocode}
 \RequirePackage{caption}
 \DeclareCaptionFont{capfont}{\foliofont}
 \captionsetup{font=capfont, textfont=capfont,
-labelfont={capfont,bf}, labelsep=quad, justification=justified,
-singlelinecheck=false}
+labelfont={capfont,bf}, labelsep=quad, justification=centering}
 \captionsetup[figure]{name=Fig.}
 \captionsetup[table]{name=Tbl., position=top}
 %    \end{macrocode}
